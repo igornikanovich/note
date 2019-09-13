@@ -1,10 +1,13 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse
 
+from .utils import crypt
 from .models import Category, Note
 from .forms import TitleNoteForm, NoteForm
+from Note.settings import CRYPT_PASSWORD
 
 
 class CategoryListView(generic.ListView):
@@ -44,19 +47,41 @@ def add_note_to_notelist(request, slug):
             note = form.save()
             note.category = category
             note.save()
-            return redirect('category-detail', slug=category.slug)
+            return redirect('index')
     else:
         form = TitleNoteForm()
     return render(request, 'noteapp/note_form.html', {'form': form})
 
-def add_textnote_to_note(request, slug):
-    # note = get_object_or_404(Note, slug=slug)
-    if request.method == "POST":
+
+
+class NoteTextUpdateView(UpdateView):
+    model = Note
+    fields = ['text', ]
+    template_name = 'noteapp/note_form.html'
+
+
+    def get(self, request, *args, **kwargs):
+        slug = self.kwargs['slug']
+        note = Note.objects.get(slug=slug)
+        title = note.title
+        text = note.text
+        form = NoteForm(initial={'title': title, 'text': text})
+        context = {'form': form}
+        return render(request, "noteapp/note_form.html", context)
+
+
+    def post(self, request, *args, **kwargs):
+        queryset = Note.objects.all()
+        note = get_object_or_404(queryset, slug=kwargs['slug'])
         form = NoteForm(request.POST)
-        if form.is_valid():
-            note = form.save()
+        passw = request.POST['password']
+        print(passw)
+        if form.is_valid() and passw == CRYPT_PASSWORD:
+            notetext = form.cleaned_data['text']
+            notetext = crypt(notetext)
+            print(notetext)
+            note.text = notetext
+            # note = form.save()
             note.save()
-            return redirect('note-detail', slug=slug)
-    else:
-        form = NoteForm()
-    return render(request, 'noteapp/note_form.html', {'form': form})
+            return HttpResponseRedirect(reverse('note-update', args=[note.slug]))
+        return render(request, 'noteapp/note_form.html', {'form': form})
