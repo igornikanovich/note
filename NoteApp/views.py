@@ -68,7 +68,7 @@ class NoteTextUpdateView(UpdateView):
     def get(self, request, *args, **kwargs):
         note = Note.objects.get(slug=self.kwargs['slug'])
         form = NoteForm(initial={'title': note.title, 'text': note.text})
-        return render(request, "noteapp/note_detail.html", {'form': form})
+        return render(request, "noteapp/note_detail.html", {'form': form, 'title': note.title})
 
     def post(self, request, *args, **kwargs):
         queryset = Note.objects.all()
@@ -81,4 +81,4 @@ class NoteTextUpdateView(UpdateView):
             note.text = notetext
             note.save()
             return HttpResponseRedirect(reverse('note-update', args=[note.slug]))
-        return render(request, 'noteapp/note_detail.html', {'form': form})
+        return render(request, 'noteapp/note_detail.html', {'form': form, 'title': note.title})

@@ -1,21 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 col-xl-5 mx-auto">
+        <div class="card card-signin my-5 bg-light text-dark">
+          <div class="card-body">
+            <h5 class="card-title text-center">Note {{ title }}</h5>
+            <form action="" method="post">
+              {% csrf_token %}
+              <div class="form-label-group">
+                {{ form.as_p }}
+              </div>
+              <div class="form-label-group">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                <label for="password"></label>
+              </div>
+               <button class="btn btn-lg btn-block text-uppercase bg-secondary text-white" type="submit">Save</button>
+               <a class="d-block text-center mt-2 small text-muted" href="{% url 'index' %}">Cancel</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
 
 <form action="" method="post">
     {% csrf_token %}
-        <table>
             {{ form.as_p }}
-        </table>
         <div class="form-group mx-sm-3 mb-2">
             <input type="password" class="form-control" id="password" name="password" placeholder="Password">
         </div>
         <button type="submit" class="btn btn-primary mb-2">Сохранить</button>
     <a href="{% url 'index' %}">Отмена</a>
 </form>
-</body>
-</html>
