@@ -1,10 +1,8 @@
-from sqlite3 import IntegrityError
-
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView
-from django.urls import reverse, NoReverseMatch
+from django.urls import reverse
 
 from .utils import crypt
 from .models import Category, Note
@@ -28,39 +26,22 @@ class CategoryListView(generic.ListView):
         else:
             return redirect('index')
 
-# class CategoryCreateView(CreateView):
-#     # model = Category
-#     # fields = ['name', ]
-#     template_name = 'index.html'
 
+class AddTitleNoteView(CreateView):
 
-# class CategoryDetailView(generic.DetailView):
-#     model = Category
-#     template_name = 'noteapp/category_detail.html'
+    def get(self, request, *args, **kwargs):
+        return render(request, 'noteapp/note_form.html', {'form': TitleNoteForm})
 
-
-# class NoteListView(generic.ListView):
-#     queryset = Note.objects.all()
-#     template_name = 'noteapp/note_list.html'
-
-
-class NoteDetailView(generic.DetailView):
-    model = Note
-    template_name = 'noteapp/note_detail.html'
-
-
-def add_note_to_notelist(request, slug):
-    category = get_object_or_404(Category, slug=slug)
-    if request.method == "POST":
+    def post(self, request, *args, **kwargs):
+        queryset = Category.objects.all()
+        category = get_object_or_404(queryset, slug=kwargs['slug'])
         form = TitleNoteForm(request.POST)
         if form.is_valid():
             note = form.save()
             note.category = category
             note.save()
             return redirect('index')
-    else:
-        form = TitleNoteForm()
-    return render(request, 'noteapp/note_form.html', {'form': form})
+        return render(request, 'noteapp/note_form.html', {'form': form})
 
 
 class NoteTextUpdateView(UpdateView):
