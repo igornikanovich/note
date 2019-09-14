@@ -5,7 +5,7 @@
 <div>
 {% for category in category_list %}
     <div class="btn-group dropright">
-        <button type="button" class="btn btn-info dropdown-toggle rounded-0" style="width: 200px" data-toggle="dropdown" aria-haspopup="true"
+        <button type="button" class="btn btn-secondary dropdown-toggle rounded-0" style="width: 200px" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
             {{ category }}
         </button>
@@ -13,18 +13,18 @@
               {% for note in category.notes.all %}
                     <a  class="dropdown-item" href="{{ note.get_absolute_url }}">{{note.title}}</a>
               {% endfor %}
-            <div class="mx-auto" style="width: 132px"><a href="{% url 'note-create' category.slug %}"> Добавить заметку </a>
+            <div class="mx-auto" style="width: 132px"><a class="text-warning" href="{% url 'note-create' category.slug %}"> Добавить заметку </a>
             </div>
         </div>
     </div>
     <br>
 {% endfor %}
 <form method="post" action=""> {% csrf_token %}
-  <div class="btn btn-info rounded-0" style="width: 200px">
+  <div class="btn btn-secondary rounded-0" style="width: 200px">
     <div class="input-group">
       <input type="text" class="form-control" name="addnewcat" placeholder="Add new">
       <span class="input-group-btn">
-        <button class="btn btn-secondary" type="submit">+</button>
+        <button class="btn btn-warning" type="submit">+</button>
       </span>
     </div>
   </div>

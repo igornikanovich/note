@@ -15,8 +15,8 @@ class CategoryListView(generic.ListView):
     template_name = 'index.html'
 
     def post(self, request, *args, **kwargs):
-        new_category = request.POST['addnewcat']
-        if len(new_category) > 0:
+        new_category = request.POST.get('addnewcat')
+        if len(str(new_category)) > 0:
             try:
                 category = Category.objects.create(name=new_category)
                 category.save()

@@ -23,8 +23,8 @@ def decrypt_val(cipher_text):
 
 def crypt(note):
     try:
-        message = decrypt_val(note)
-        return message
+        note = decrypt_val(note)
+        return note
     except ValueError:
-        message = encrypt_val(note)
-        return message
+        note = encrypt_val(note)
+        return note
