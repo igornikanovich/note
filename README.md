@@ -6,7 +6,7 @@ Run the following commands:
 
 ```
 git init
-git install https://github.com/igornikanovich/note.git
+git clone https://github.com/igornikanovich/note.git
 pipenv install
 ```
 
@@ -24,4 +24,4 @@ Run the following commands:
 ## Additionally
 
 Пароль для использования ```123456```
-#### Шифрование поддерживается только для текста на латинице!
+### Шифрование поддерживается только для текста на латинице!
