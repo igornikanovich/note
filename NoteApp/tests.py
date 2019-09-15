@@ -22,7 +22,7 @@ class AddTitleNoteViewTest(TestCase):
     def test_get_response(self):
         response = self.client.get(reverse('Note-create', kwargs={'slug': self.category.slug}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'NoteApp/note_form.html')
+        self.assertTemplateUsed(response, 'noteapp/note_form.html')
 
     def test_create_title_to_note_is_success(self):
         response = self.client.post(reverse('Note-create', kwargs={'slug': self.category.slug}),
@@ -46,7 +46,7 @@ class NoteTextUpdateViewTest(TestCase):
     def test_get_response(self):
         response = self.client.get(reverse('Note-update', kwargs={'slug': self.note.slug}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'NoteApp/note_detail.html')
+        self.assertTemplateUsed(response, 'noteapp/note_detail.html')
 
     def test_update_note_is_success(self):
         response = self.client.post(reverse('Note-update', kwargs={'slug': self.note.slug}),
