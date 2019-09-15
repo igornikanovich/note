@@ -17,12 +17,12 @@ class Migration(migrations.Migration):
             field=models.SlugField(blank=True, unique=True),
         ),
         migrations.AlterField(
-            model_name='note',
+            model_name='Note',
             name='category',
             field=models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, related_name='notes', to='NoteApp.Category'),
         ),
         migrations.AlterField(
-            model_name='note',
+            model_name='Note',
             name='text',
             field=models.TextField(blank=True, max_length=300),
         ),

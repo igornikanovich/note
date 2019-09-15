@@ -30,4 +30,4 @@ class Note(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('note-update', args=[self.slug])
+        return reverse('Note-update', args=[self.slug])

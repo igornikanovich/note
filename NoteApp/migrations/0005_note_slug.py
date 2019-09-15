@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='note',
+            model_name='Note',
             name='slug',
             field=models.SlugField(default=uuid.uuid1, unique=True),
         ),

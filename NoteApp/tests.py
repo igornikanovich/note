@@ -20,12 +20,12 @@ class AddTitleNoteViewTest(TestCase):
         self.category.delete()
 
     def test_get_response(self):
-        response = self.client.get(reverse('note-create', kwargs={'slug': self.category.slug}))
+        response = self.client.get(reverse('Note-create', kwargs={'slug': self.category.slug}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'noteapp/note_form.html')
+        self.assertTemplateUsed(response, 'NoteApp/note_form.html')
 
     def test_create_title_to_note_is_success(self):
-        response = self.client.post(reverse('note-create', kwargs={'slug': self.category.slug}),
+        response = self.client.post(reverse('Note-create', kwargs={'slug': self.category.slug}),
                                     {'title': 'testtitle'})
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Note.objects.count(), 1)
@@ -44,17 +44,17 @@ class NoteTextUpdateViewTest(TestCase):
         self.note.delete()
 
     def test_get_response(self):
-        response = self.client.get(reverse('note-update', kwargs={'slug': self.note.slug}))
+        response = self.client.get(reverse('Note-update', kwargs={'slug': self.note.slug}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'noteapp/note_detail.html')
+        self.assertTemplateUsed(response, 'NoteApp/note_detail.html')
 
     def test_update_note_is_success(self):
-        response = self.client.post(reverse('note-update', kwargs={'slug': self.note.slug}),
+        response = self.client.post(reverse('Note-update', kwargs={'slug': self.note.slug}),
                                     {'text': 'testtitle', 'password': 123456})
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith('/note/'))
+        self.assertTrue(response.url.startswith('/Note/'))
 
     def test_update_is_fail_wrong_pass(self):
-        response = self.client.post(reverse('note-update', kwargs={'slug': self.note.slug}),
+        response = self.client.post(reverse('Note-update', kwargs={'slug': self.note.slug}),
                                     {'text': 'testtitle', 'password': 111111})
         self.assertEqual(response.status_code, 200)

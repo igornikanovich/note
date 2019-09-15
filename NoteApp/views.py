@@ -61,5 +61,5 @@ class NoteTextUpdateView(UpdateView):
             notetext = crypt(notetext)
             note.text = notetext
             note.save()
-            return HttpResponseRedirect(reverse('note-update', args=[note.slug]))
+            return HttpResponseRedirect(reverse('Note-update', args=[note.slug]))
         return render(request, 'noteapp/note_detail.html', {'form': form, 'title': note.title})
