@@ -62,4 +62,5 @@ class NoteTextUpdateView(UpdateView):
             note.text = notetext
             note.save()
             return HttpResponseRedirect(reverse('Note-update', args=[note.slug]))
-        return render(request, 'noteapp/note_detail.html', {'form': form, 'title': note.title})
+        return render(request, 'noteapp/note_detail.html', {'form': form, 'title': note.title,
+                                                            'wrongpass': 'Введите правильный пароль'})
