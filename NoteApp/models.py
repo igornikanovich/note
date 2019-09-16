@@ -23,7 +23,7 @@ class Category(models.Model):
 class Note(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, related_name='notes')
     title = models.CharField(max_length=50)
-    text = models.TextField(max_length=300, blank=True)
+    text = models.TextField(max_length=300, blank=True, null=True)
     slug = models.SlugField(max_length=50, unique=True, default=uuid.uuid1)
 
     def __str__(self):

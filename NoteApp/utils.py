@@ -1,30 +1,29 @@
+import binascii
 import base64
 
-from Crypto.Cipher import AES
+from cryptography.fernet import Fernet
 
 from Note.settings import CRYPT_KEY
 
 
-def encrypt_val(clear_text):
-    enc_secret = AES.new(CRYPT_KEY)
-    tag_string = (str(clear_text) +
-                  (AES.block_size -
-                   len(str(clear_text)) % AES.block_size) * "\0")
-    cipher_text = base64.b64encode(enc_secret.encrypt(tag_string))
-    return cipher_text
+def encrypt_val(txt):
+    cipher_suite = Fernet(CRYPT_KEY)
+    encrypted_text = cipher_suite.encrypt(txt.encode('ascii'))
+    encrypted_text = base64.urlsafe_b64encode(encrypted_text).decode("ascii")
+    return encrypted_text
 
 
-def decrypt_val(cipher_text):
-    dec_secret = AES.new(CRYPT_KEY)
-    raw_decrypted = dec_secret.decrypt(base64.b64decode(cipher_text[2:-1]))
-    clear_val = raw_decrypted.decode().rstrip("\0")
-    return clear_val
+def decrypt_val(txt):
+    txt = base64.urlsafe_b64decode(txt)
+    cipher_suite = Fernet(CRYPT_KEY)
+    decoded_text = cipher_suite.decrypt(txt).decode("ascii")
+    return decoded_text
 
 
 def crypt(note):
     try:
         note = decrypt_val(note)
         return note
-    except ValueError:
+    except binascii.Error:
         note = encrypt_val(note)
         return note
