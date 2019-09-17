@@ -7,14 +7,10 @@ import uuid
 
 class Category(models.Model):
     name = models.CharField(max_length=20)
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(unique=True, blank=True, default=uuid.uuid1)
 
     def __str__(self):
         return self.name
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Category, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('category-detail', args=[self.slug])
