@@ -25,14 +25,3 @@
     </div>
   </div>
 {% endblock content %}
-
-
-<form action="" method="post">
-    {% csrf_token %}
-            {{ form.as_p }}
-        <div class="form-group mx-sm-3 mb-2">
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-        </div>
-        <button type="submit" class="btn btn-primary mb-2">Сохранить</button>
-    <a href="{% url 'index' %}">Отмена</a>
-</form>

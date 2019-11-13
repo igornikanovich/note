@@ -1,7 +1,7 @@
 import binascii
 import base64
 
-from cryptography.fernet import Fernet
+from cryptography.fernet import Fernet, InvalidToken
 
 from Note.settings import CRYPT_KEY
 
@@ -25,5 +25,8 @@ def crypt(note):
         note = decrypt_val(note)
         return note
     except binascii.Error:
+        note = encrypt_val(note)
+        return note
+    except InvalidToken:
         note = encrypt_val(note)
         return note

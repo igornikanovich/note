@@ -55,7 +55,7 @@ ROOT_URLCONF = 'Note.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'Note/../templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'Note/../Note/../templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'Note.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'Note/../db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'Note/../Note/../db.sqlite3'),
     }
 }
 
